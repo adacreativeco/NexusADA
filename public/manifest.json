@@ -1,0 +1,21 @@
+{
+  "short_name": "ADA Co-OS",
+  "name": "ADA Co-OS Agency Command Center",
+  "icons": [
+    {
+      "src": "/images/ada-co-os-logo-transparent.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/images/ada-co-os-logo-transparent.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/admin",
+  "background_color": "#0c0a09",
+  "theme_color": "#10b981",
+  "display": "standalone",
+  "orientation": "portrait"
+}

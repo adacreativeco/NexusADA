@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Providers;
+
+use Native\Laravel\Facades\Window;
+use Native\Laravel\Contracts\ProvidesPhpIni;
+
+class NativeAppServiceProvider implements ProvidesPhpIni
+{
+    /**
+     * Executed once the native application has been booted.
+     * Use this method to open windows, register global shortcuts, etc.
+     */
+    public function boot(): void
+    {
+        Window::open()
+            ->route('admin.dashboard')
+            ->title('ADA Co-OS - Kurumsal Yönetim Platformu')
+            ->width(1400)
+            ->height(900)
+            ->minWidth(1024)
+            ->minHeight(700)
+            ->maximized();
+    }
+
+    /**
+     * Return an array of php.ini directives to be set.
+     */
+    public function phpIni(): array
+    {
+        return [
+        ];
+    }
+}

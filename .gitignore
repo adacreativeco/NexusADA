@@ -1,0 +1,93 @@
+*.log
+.DS_Store
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+/.fleet
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+Homestead.json
+Homestead.yaml
+Thumbs.db
+*.zip
+scratch/
+dist/
+*.tmp
+*_temp.blade.php.tmp
+test_ftp.txt
+*.exe
+
+# Nexus ADA — Hassas raporlar
+docs/nexusada/security/reports/
+docs/nexusada/legal/reports/
+docs/nexusada/management/state.yaml
+
+# Exec Team — Hassas agentic veriler
+docs/nexus-ada/cfo/                          # TÜM finans verileri hassas
+docs/nexus-ada/cs/save-calls/                # PII içerir
+docs/nexus-ada/cs/kiracilar/                 # PII içerir
+docs/nexus-ada/cto/vendor/                   # Sözleşme/fiyat bilgileri
+docs/nexus-ada/cos/meeting-haz/              # Hassas toplantı notları
+docs/nexus-ada/cos/eskalasyon/               # Hassas eskalasyon dosyaları
+docs/nexus-ada/intel/rakipler/               # Rekabet avantajı
+docs/nexus-ada/intel/firsat/                 # Rekabet avantajı
+# NOT: docs/nexus-ada/cto/adr/ → ASLA gitignore'a ekleme (kurumsal hafıza)
+# NOT: docs/nexus-ada/cos/haftalik-sync/ → Ekip görmeli (şeffaflık)
+
+# Proje Takip ve Rapor Dosyaları (Yerel/Local Only)
+CHANGELOG.md
+COMPLETED.md
+PROGRESS.md
+DOGRULAMA_RAPORU.md
+NEXUS_DURUM_RAPORU.md
+deploy_log.txt
+mysql_final_audit_results.txt
+mysql_full_test_results.txt
+remote_test_results.txt
+remote_verify_output*.txt
+test_db.php
+
+# BTM Kesişim ve Kanıt Klasörleri
+BTM_Kesisim/
+KANIT/
+*.zip
+
+# Geliştirici/Agent Otomasyon Dosyaları
+.agent/
+.agents/
+
+# Kök Dizindeki Yardımcı/Test Betikleri (Python & PHP & HTML & TXT)
+/*.py
+/*.php
+/*.html
+/*.txt
+
+# Gizli / Hassas Şirket Dokümanları (Docs)
+docs/nexus-ada/
+docs/nexusada/
+docs/archive/
+docs/competitor-feature-gap-analysis.md
+docs/implementation-plan-v2.md
+docs/ANTIGRAVITY_BRAIN.md
+docs/TEST_EVIDENCE.md
+
+# Site ve Arama Motoru Ayarları (Local Only)
+public/robots.txt
+public/sitemap.xml
+
+
+
+
