@@ -140,9 +140,6 @@ nexus-ada/
 │       ├── AutomationEngine.php
 │       ├── WebhookDispatcher.php
 │       └── ImapSyncService.php
-├── BTM_Kesisim/                      # BTM Kesişim başvuru materyalleri
-│   ├── basvuru_paketi.md             # Form cevapları + strateji
-│   └── nexus_ada_pitch_deck.html     # 11 slayt pitch deck (PDF'e yazdır)
 ├── docs/                             # Teknik dökümanlar
 │   ├── ARCHITECTURE.md
 │   ├── DATABASE.md
