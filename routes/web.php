@@ -34,3 +34,20 @@ Route::get('/system-status', function () {
         'timestamp' => now()->toIso8601String()
     ]);
 });
+
+// ── PWA & Static Service Worker Routes ──────────
+Route::get('/manifest.json', function () {
+    $path = public_path('manifest.json');
+    if (!file_exists($path)) {
+        return response()->json(['name' => 'ADA Co-OS', 'short_name' => 'NexusADA'], 200, ['Content-Type' => 'application/json']);
+    }
+    return response()->file($path, ['Content-Type' => 'application/json']);
+});
+
+Route::get('/sw.js', function () {
+    $path = public_path('sw.js');
+    if (!file_exists($path)) {
+        return response("self.addEventListener('install', e => {});", 200, ['Content-Type' => 'application/javascript']);
+    }
+    return response()->file($path, ['Content-Type' => 'application/javascript']);
+});

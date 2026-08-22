@@ -1,8 +1,8 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "adacreativeco/nexus-ada",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "ADA Co-OS — Digital Intelligence & Multi-Tenant Enterprise Operations Platform",
     "keywords": [
         "laravel",
         "framework"
@@ -111,5 +111,13 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "homepage": "https://adacreative.co/vaka-analizleri/nexus-ada",
+    "authors": [
+        {
+            "name": "ADA Creative Co.",
+            "email": "hello@adacreative.co",
+            "homepage": "https://adacreative.co"
+        }
+    ]
 }

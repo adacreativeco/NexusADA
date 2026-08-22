@@ -10,9 +10,14 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         
-        $db = config('database.connections.mysql.database');
+        $conn = config('database.default', 'sqlite');
+        if ($conn === 'sqlite') {
+            return;
+        }
         
-        if (!str_contains($db, 'test')) {
+        $db = (string) config("database.connections.{$conn}.database");
+        
+        if (!str_contains($db, 'test') && $db !== ':memory:') {
             throw new \RuntimeException("GÜVENLİK: Test DB ismi 'test' içermiyor. DB: {$db}");
         }
 
