@@ -24,11 +24,21 @@ jobs:
           extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_sqlite, bcmath, curl, zip
           coverage: none
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Copy .env.testing to .env
         run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
 
       - name: Install Composer Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Build Frontend Assets
+        run: |
+          npm install -q
+          npm run build
 
       - name: Execute Tests (PHPUnit / Pest)
         env:

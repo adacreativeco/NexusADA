@@ -10,6 +10,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         
+        $this->withoutVite();
+        
         $conn = config('database.default', 'sqlite');
         if ($conn === 'sqlite') {
             return;
