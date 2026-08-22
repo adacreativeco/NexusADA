@@ -2,13 +2,14 @@
 
 <div align="center">
 
-[![Sürüm](https://img.shields.io/badge/Sürüm-v1.2.0--enterprise-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
+[![Sürüm](https://img.shields.io/badge/Sürüm-v1.3.0--production-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
 [![Laravel](https://img.shields.io/badge/Laravel-12.0+-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com/)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net/)
+[![Docker](https://img.shields.io/badge/Docker-Hazır_%7C_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](docker-compose.yml)
 [![Livewire](https://img.shields.io/badge/Livewire-3.0+-FB70A9?style=for-the-badge&logo=livewire&logoColor=white)](https://livewire.laravel.com/)
 [![Yapay Zeka](https://img.shields.io/badge/Yapay_Zeka-OpenAI_|_Claude_|_Gemini_|_Nvidia_|_Ollama-8A2BE2?style=for-the-badge)](app/Services/AI/)
 [![Ödemeler](https://img.shields.io/badge/Ödeme_Ağ_Geçitleri-Iyzico_%7C_Stripe_%7C_Webhooks-635BFF?style=for-the-badge)](app/Services/Payment/)
-[![WebSockets](https://img.shields.io/badge/Canlı_Akış-Broadcasting_%7C_Reverb-FF2D20?style=for-the-badge)](app/Events/)
+[![WebSockets](https://img.shields.io/badge/Canlı_Akış-Echo_%7C_Reverb-FF2D20?style=for-the-badge)](resources/js/echo.js)
 [![Lisans](https://img.shields.io/badge/Lisans-Apache_2.0-blue?style=for-the-badge)](LICENSE)
 [![Testler](https://img.shields.io/badge/Testler-64%20Geçti%20(141%20Doğrulama)-success?style=for-the-badge&logo=php&logoColor=white)](tests/)
 [![GitHub Stars](https://img.shields.io/github/stars/adacreativeco/NexusADA?style=for-the-badge&color=ffd700)](https://github.com/adacreativeco/NexusADA/stargazers)
@@ -26,8 +27,8 @@
 ---
 
 > [!NOTE]
-> ### 🛡️ Tam Donanımlı Kurumsal Operasyon Platformu (v1.2.0)
-> ADA Co-OS (NexusADA), satır düzeyinde çok kiracılı izolasyon, 3 katmanlı RBAC, çok sağlayıcılı yapay zeka ağ geçidi, vektör anlamsal hafıza, koşullu iş akışı yürütme, otomatik webhook dinleyicili ödeme ağ geçitleri (Iyzico, Stripe), kriptografik SHA-256 dijital imzalar, işlem e-postaları, WebSocket canlı yayınları, kiracıya özel bulut depolama ve Kritik Yol Yöntemi (CPM) proje planlama motorunu içeren uçtan uca bir kurumsal operasyon sistemidir.
+> ### 🛡️ Kurumsal Referans & Kendi Sunucunuzda Barındırılabilir Platform (v1.3.0)
+> ADA Co-OS (NexusADA), tek komutla Docker Compose kurulumu, Nginx ters vekil sunucusu, MySQL 8, Redis kuyrukları, Reverb WebSocket canlı yayını, satır düzeyinde çok kiracılı izolasyon, 3 katmanlı RBAC, çok sağlayıcılı yapay zeka ağ geçidi, vektör anlamsal hafıza, koşullu iş akışı yürütme, ödeme webhookları (Iyzico, Stripe), SHA-256 dijital imzalar, işlem e-postaları, interaktif tasarım revizyon tuvali ve Kritik Yol Yöntemi (CPM) proje planlama motorunu içeren eksiksiz bir kurumsal platformdur.
 
 ---
 
@@ -64,118 +65,80 @@ flowchart TD
         CPMEngine["Kritik Yol Yöntemi (CPM) & Kaynak Kapasite Isı Haritası"]
     end
 
-    subgraph DataLayer["🗄️ Veritabanı & Kalıcılık"]
-        MySQL["Ana Veritabanı (MySQL 8 / PostgreSQL / SQLite)"]
-        Redis["Redis Önbellek & Asenkron İş Kuyrukları"]
+    subgraph ContainerLayer["🐳 Docker Kendi Sunucunuzda Barındırma Katmanı"]
+        Nginx["Nginx Ters Vekil Sunucusu & Güvenlik Başlıkları"]
+        AppFPM["PHP 8.4-FPM Optimize Konteyner"]
+        QueueWorker["Arka Plan Redis Asenkron Kuyruk İşleyicisi"]
+        ReverbServer["Reverb Canlı WebSocket Daemon Sunucusu (Port 8080)"]
+        MySQL["MySQL 8.4 İzole Veritabanı Servisi"]
+        Redis["Redis Bellek İçi Önbellek & Oturum Yönetimi"]
     end
 
     ClientAccess --> SecurityLayer
     SecurityLayer --> CoreEngines
-    CoreEngines <--> DataLayer
+    CoreEngines <--> ContainerLayer
 ```
 
 ---
 
-## 🚀 Öne Çıkan Kurumsal Yetenekler
+## 🚀 Öne Çıkan Modüller & Kurumsal Yetenekler
 
-### 1. 🤖 Çoklu LLM Ağ Geçidi & Anlamsal RAG Vektör Hafızası
+### 1. 🐳 Tek Komutla Docker Kurulum Paketi
+- **Eksiksiz Compose Mimarisi:** `docker-compose.yml` ile PHP 8.4-FPM, Nginx, MySQL 8.4, Redis, arka plan kuyruk işleyicileri ve Reverb WebSocket sunucusunu tek komutla ayağa kaldırır.
+- **Kesintisiz Dağıtım Betiği:** Otomatik göçler, önbellekleme ve kuyruk yeniden başlatmayı yöneten `deploy.sh` betiği.
+
+### 2. 🤖 Çoklu LLM Ağ Geçidi & Anlamsal RAG Vektör Hafızası
 - **Evrensel Sağlayıcı Yönlendirmesi:** **OpenAI (GPT-4o)**, **Anthropic (Claude 3.5 Sonnet)**, **Google (Gemini 2.0)**, **NVIDIA NIM** ve yerel **Ollama** destekli yapay zeka ağ geçidi.
 - **Kiracı Kapsamlı Vektör Deposu:** Kurumsal hafızalar üzerinde kosinüs benzerliği ile anlamsal arama (`VectorStore.php`).
 - **Otonom Araç Çağırma:** Görev açma, teklif taslağı hazırlama ve müşteri geçmişi sorgulama araçları (`AIToolRegistry.php`).
 
-### 2. ⚡ Koşullu İş Akışları & İnsan Onay Kapıları (Human-in-the-Loop)
+### 3. ⚡ Koşullu İş Akışları & İnsan Onay Kapıları (Human-in-the-Loop)
 - **Dinamik Dallanma:** Süreçleri bütçe, durum ve özel koşullara göre dallandırma (`ConditionEvaluator.php`).
 - **Yönetici Onay Kapısı:** Kriptografik tokenlar ile bütçe ve tekliflerde yönetici imza adımları (`ApprovalGateService.php`).
 
-### 3. 💳 Çoklu Ödeme Ağ Geçitleri, Webhook Dinleyicileri & Kriptografik E-İmza
+### 4. 💳 Çoklu Ödeme Ağ Geçitleri, Webhook Dinleyicileri & Kriptografik E-İmza
 - **Ödeme İşleme:** **Iyzico**, **Stripe** ve güvenli sandbox sürücüleri (`PaymentService.php`).
 - **Otomatik Webhooklar:** `/api/webhooks/stripe` ve `/api/webhooks/iyzico` uç noktaları ile gelen ödemeleri anında faturaya işleyip kapatma.
 - **SHA-256 Dijital İmza:** İmzacı kimliği, IP adresi, zaman damgası ve HMAC-SHA256 doğrulama sertifikası (`DigitalSignatureService.php`).
 
-### 4. 📡 Canlı WebSockets & İşlem E-Posta Bildirimleri
+### 5. 📡 Canlı WebSockets & İşlem E-Posta Bildirimleri
 - **Canlı Yayın (Broadcasting):** Kiracıya özel gizli kanallardan anlık görev ve bildirim yayınlama (`TaskUpdatedEvent`, `NotificationCreatedEvent`).
+- **İstemci Echo Entegrasyonu:** `resources/js/echo.js` ile arayüzün sayfa yenilenmeden canlı güncellenmesi.
 - **İşlem E-Postaları:** Fatura tahsilatında (`InvoicePaidNotification`) ve teklif gönderiminde (`ProposalSentNotification`) otomatik HTML bildirimleri.
 
-### 5. 🎨 İnteraktif Tasarım İnceleme & Pin Bırakma Tuvali
+### 6. 🎨 İnteraktif Tasarım İnceleme & Pin Bırakma Tuvali
 - **Görsel Revizyon Tuvali (`AssetReviewer.php`):** Müşterinin tasarım dosyaları üzerine tıklayıp koordinat bazlı ($x, y$) nokta atışı pin bırakıp yorum yazabildiği interaktif inceleme ekranı.
 
-### 6. 📅 Kritik Yol Yöntemi (CPM) & Kaynak Dengeleme
+### 7. 📅 Kritik Yol Yöntemi (CPM) & Kaynak Dengeleme
 - **CPM Zaman Çizelgelemesi:** Erken/geç başlangıç ve bitiş hesaplamaları, toplam bolluk/esneklik ve kritik yol görev zinciri tespiti (`CriticalPathEngine.php`).
 - **Kapasite & Aşırı Yük Isı Haritası:** Çalışanların günlük çalışma saatlerini izleyerek 8 saat üzerindeki aşırı yüklenmeleri kırmızı bayrakla uyarır (`ResourceAllocationService.php`).
 
 ---
 
-## 📸 Görsel Vitrin
+## 🛠️ Hızlı Başlangıç & Dağıtım
 
-<div align="center">
-
-### 📊 Modern Operasyon & Analitik Kontrol Paneli
-*Finansal KPI'lar, Gantt proje zaman çizelgeleri, aktif görevler ve ekip kapasitesini gösteren yönetici paneli.*
-![ADA Co-OS Dashboard](public/images/dashboard-preview.png)
-
-<br/>
-
-| 📁 Çok Kiracılı Proje Akışı | 🤖 Yapay Zeka Asistanı & Hafıza Çekirdeği |
-|:---:|:---:|
-| ![Proje Akış Önizlemesi](public/images/preview-1.png) | ![Yapay Zeka Zeka Önizlemesi](public/images/preview-2.png) |
-| *Görev kanban panoları, kilometre taşları ve müşteri yetkilendirmesi.* | *Bağlamsal kurumsal hafıza ve istem orkestrasyonu.* |
-
-| 💼 Müşteri Portali & Faturalandırma | ⚡ İş Akışı Otomasyon Motoru |
-|:---:|:---:|
-| ![Müşteri Portali Önizlemesi](public/images/preview-3.png) | ![Otomasyon Önizlemesi](public/images/preview-4.png) |
-| *Self-servis müşteri portali, teklifler ve DomPDF raporları.* | *Olay güdümlü webhook dağıtıcıları (Slack, Discord).* |
-
-</div>
+### Seçenek A: 🐳 Docker Compose (Prodüksiyon İçin Önerilen)
+```bash
+git clone https://github.com/adacreativeco/NexusADA.git
+cd NexusADA
+docker compose up -d --build
+```
+Sisteminiz [http://localhost](http://localhost) üzerinde anında yayında!
 
 ---
 
-## 📡 REST API Referansı
-
-Sanctum ile korunan `/api/v1` uç noktaları:
-
-| Uç Nokta | Metot | Açıklama |
-|---|---|---|
-| `/api/v1/projects` | `GET`, `POST` | Çok kiracılı projeleri listeler ve yeni proje oluşturur. |
-| `/api/v1/tasks` | `GET`, `POST`, `PUT`, `DELETE` | Proje görevleri ve kilometre taşlarını yönetir. |
-| `/api/v1/clients` | `GET`, `POST`, `PUT` | Müşteri profilleri, yetkililer ve fatura koşulları. |
-| `/api/v1/campaigns` | `GET`, `POST` | Pazarlama kampanyası takibi ve bütçe kullanımı. |
-| `/api/v1/reports` | `GET` | Toplu analitik raporları ve metrik özetleri üretir. |
-| `/api/webhooks/stripe` | `POST` | Stripe ödeme oturumu ve tahsilat webhook dinleyicisi. |
-| `/api/webhooks/iyzico` | `POST` | Iyzico doğrudan / 3D Secure ödeme webhook dinleyicisi. |
-
----
-
-## 🛠️ Hızlı Başlangıç
-
-### 1. Repoyu Klonlayın ve Bağımlılıkları Yükleyin
+### Seçenek B: Yerel PHP 8.4 Geliştirme
 ```bash
 git clone https://github.com/adacreativeco/NexusADA.git
 cd NexusADA
 composer install
 npm install && npm run build
-```
-
-### 2. Ortamı Yapılandırın
-```bash
 cp .env.example .env
 php artisan key:generate
-```
-
-### 3. Veritabanı Göçlerini ve Başlangıç Verilerini Yükleyin
-```bash
 php artisan migrate --seed
-```
-
-### 4. Otomatik Test Paketini Çalıştırın (64 Test, 141 Doğrulama)
-```bash
 php artisan test
-```
-
-### 5. Yerel Sunucuyu Başlatın
-```bash
 php artisan serve
 ```
-Tarayıcınızda [http://localhost:8000](http://localhost:8000) adresini açın.
 
 ---
 
