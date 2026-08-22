@@ -2,14 +2,15 @@
 
 <div align="center">
 
-[![Version](https://img.shields.io/badge/Version-v1.1.0--enterprise-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
+[![Version](https://img.shields.io/badge/Version-v1.2.0--enterprise-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
 [![Laravel](https://img.shields.io/badge/Laravel-12.0+-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com/)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net/)
 [![Livewire](https://img.shields.io/badge/Livewire-3.0+-FB70A9?style=for-the-badge&logo=livewire&logoColor=white)](https://livewire.laravel.com/)
 [![Multi-LLM](https://img.shields.io/badge/AI_Engine-OpenAI_|_Claude_|_Gemini_|_Nvidia_|_Ollama-8A2BE2?style=for-the-badge)](app/Services/AI/)
-[![Payments](https://img.shields.io/badge/Payments-Iyzico_%7C_Stripe-635BFF?style=for-the-badge)](app/Services/Payment/)
+[![Payments](https://img.shields.io/badge/Payments-Iyzico_%7C_Stripe_%7C_Webhooks-635BFF?style=for-the-badge)](app/Services/Payment/)
+[![WebSockets](https://img.shields.io/badge/Realtime-Broadcasting_%7C_Reverb-FF2D20?style=for-the-badge)](app/Events/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-60%20Passed%20(128%20Assertions)-success?style=for-the-badge&logo=php&logoColor=white)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-64%20Passed%20(141%20Assertions)-success?style=for-the-badge&logo=php&logoColor=white)](tests/)
 [![GitHub Stars](https://img.shields.io/github/stars/adacreativeco/NexusADA?style=for-the-badge&color=ffd700)](https://github.com/adacreativeco/NexusADA/stargazers)
 
 <br/>
@@ -25,8 +26,8 @@
 ---
 
 > [!NOTE]
-> ### 🛡️ Enterprise Reference Architecture (v1.1.0)
-> ADA Co-OS is an open-source enterprise operations reference system. It implements multi-tenant isolation, 3-tier RBAC, a multi-provider AI gateway, vector semantic memory, conditional workflow execution, payment gateways (Iyzico, Stripe), cryptographic digital signatures, IMAP email intelligence, and Critical Path Method (CPM) project scheduling.
+> ### 🛡️ Complete Enterprise Operations Platform (v1.2.0)
+> ADA Co-OS (NexusADA) is an end-to-end multi-tenant corporate operating platform implementing row-level data isolation, 3-tier RBAC, a multi-provider AI gateway, vector semantic memory, conditional workflow execution, payment gateways (Iyzico, Stripe) with automated webhook handlers, cryptographic SHA-256 digital signatures, transactional HTML mailers, WebSocket broadcasting, tenant-isolated cloud storage, and Critical Path Method (CPM) project scheduling.
 
 ---
 
@@ -37,9 +38,10 @@ flowchart TD
     subgraph ClientAccess["🌐 Access Channels & Endpoints"]
         WebAdmin["💻 Web Admin Portal (/admin)"]
         Webmaster["🛡️ Webmaster Control Center (/platform)"]
-        ClientPortal["👥 Self-Service Client Portal (/client)"]
+        ClientPortal["👥 Interactive Client Portal (/client)"]
         DesktopApp["🖥️ NativePHP Electron Desktop App"]
         RESTClients["📡 Sanctum Authenticated REST API (/api/v1)"]
+        Webhooks["💳 Stripe & Iyzico Payment Webhooks (/api/webhooks/*)"]
     end
 
     subgraph SecurityLayer["🔐 Security & Isolation Layer"]
@@ -57,6 +59,8 @@ flowchart TD
         PaymentEngine["Multi-Gateway Payment Engine (Iyzico, Stripe, Sandbox)"]
         DigitalSign["Cryptographic SHA-256 E-Signature Verification"]
         EmailIntel["IMAP Email Threading & Auto-Ticketing"]
+        BroadcastEngine["Laravel Reverb / WebSockets Real-Time Event Dispatcher"]
+        CloudStorage["S3 / R2 / MinIO Isolated Cloud Storage Engine"]
         CPMEngine["Critical Path Method (CPM) & Resource Capacity Heatmap"]
     end
 
@@ -72,7 +76,7 @@ flowchart TD
 
 ---
 
-## 🚀 Key Enterprise Capabilities
+## 🚀 Enterprise Modules & Capabilities
 
 ### 1. 🤖 Multi-LLM Gateway & Semantic RAG Vector Memory
 - **Universal Provider Routing:** Pluggable AI gateway supporting **OpenAI (GPT-4o)**, **Anthropic (Claude 3.5 Sonnet)**, **Google (Gemini 2.0)**, **NVIDIA NIM**, and local **Ollama** with deterministic mock fallbacks.
@@ -83,15 +87,19 @@ flowchart TD
 - **Dynamic Branching:** Evaluates record conditions (`>`, `<`, `==`, `contains`, `in`) to steer business processes dynamically (`ConditionEvaluator.php`).
 - **Human-in-the-Loop:** Cryptographically signed approval gates for management sign-offs on budgets and proposals (`ApprovalGateService.php`).
 
-### 3. 💼 Multi-Gateway Payments & Cryptographic E-Signatures
+### 3. 💳 Multi-Gateway Payments, Webhook Listeners & Cryptographic E-Signatures
 - **Payment Processing:** Unified payment provider architecture supporting **Iyzico**, **Stripe**, and sandbox test gateways (`PaymentService.php`).
+- **Automated Webhooks:** `/api/webhooks/stripe` and `/api/webhooks/iyzico` controllers verifying payloads and auto-reconciling invoices in real-time.
 - **SHA-256 Digital Signatures:** Generates verifiable audit certificates capturing signer identity, IP, user agent, timestamp, and SHA-256 HMAC integrity hashes (`DigitalSignatureService.php`).
 
-### 4. 📧 IMAP Email Intelligence & AI Auto-Ticketing
-- **Conversation Threading:** Automatic thread stitching via `In-Reply-To` and subject normalization (`EmailThreadingService.php`).
-- **Inbound AI Processing:** Sentiment analysis, urgency scoring, and automated task extraction from customer emails (`EmailIntelligenceService.php`).
+### 4. 📡 Real-Time WebSockets & Transactional Notifications
+- **Event Broadcasting:** Event dispatcher broadcasting on tenant-scoped private WebSocket channels (`TaskUpdatedEvent`, `NotificationCreatedEvent`).
+- **Transactional Mailers:** Automated HTML notifications on invoice collections (`InvoicePaidNotification`) and proposal deliveries (`ProposalSentNotification`).
 
-### 5. 📅 Critical Path Method (CPM) & Resource Leveling
+### 5. 🎨 Interactive Client Pin-Annotation Canvas
+- **Design Review Canvas (`AssetReviewer.php`):** Point-and-click pin placement on design assets, allowing clients to leave coordinate-based ($x, y$) threaded feedback.
+
+### 6. 📅 Critical Path Method (CPM) & Resource Capacity Leveling
 - **CPM Schedule Analysis:** Forward and backward pass calculation identifying project duration, early/late dates, total float/slack, and critical path task chains (`CriticalPathEngine.php`).
 - **Workload Capacity Heatmap:** Tracks daily workload hours per employee, flagging over-allocation (>8h/day) to prevent team burnout (`ResourceAllocationService.php`).
 
@@ -132,6 +140,8 @@ Sanctum-authenticated REST API endpoints available under `/api/v1`:
 | `/api/v1/clients` | `GET`, `POST`, `PUT` | Client CRM profiles, contacts, and billing terms. |
 | `/api/v1/campaigns` | `GET`, `POST` | Marketing campaign tracking and budget utilization. |
 | `/api/v1/reports` | `GET` | Generates aggregated analytics reports and metric summaries. |
+| `/api/webhooks/stripe` | `POST` | Stripe checkout & charge webhook listener. |
+| `/api/webhooks/iyzico` | `POST` | Iyzico 3D Secure / Direct payment webhook listener. |
 
 ---
 
@@ -156,7 +166,7 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
-### 4. Run Automated Test Suite (60 Tests, 128 Assertions)
+### 4. Run Automated Test Suite (64 Tests, 141 Assertions)
 ```bash
 php artisan test
 ```

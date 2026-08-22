@@ -51,3 +51,7 @@ Route::prefix('v1')->middleware(['auth:sanctum', 'throttle:60,1'])->group(functi
     Route::get('reports', [\App\Http\Controllers\Api\V1\ReportController::class, 'index']);
 });
 
+
+// ── Production Payment Webhooks ─────────────────
+Route::post('/webhooks/stripe', [App\Http\Controllers\Api\WebhookController::class, 'handleStripe'])->name('api.webhooks.stripe');
+Route::post('/webhooks/iyzico', [App\Http\Controllers\Api\WebhookController::class, 'handleIyzico'])->name('api.webhooks.iyzico');
