@@ -2,13 +2,14 @@
 
 <div align="center">
 
-[![Version](https://img.shields.io/badge/Version-v3.1.0--preview-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
-[![Status](https://img.shields.io/badge/Status-Active_Development_/_Prototype-amber?style=for-the-badge)](https://github.com/adacreativeco/NexusADA)
+[![Version](https://img.shields.io/badge/Version-v1.1.0--enterprise-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
 [![Laravel](https://img.shields.io/badge/Laravel-12.0+-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com/)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net/)
 [![Livewire](https://img.shields.io/badge/Livewire-3.0+-FB70A9?style=for-the-badge&logo=livewire&logoColor=white)](https://livewire.laravel.com/)
+[![Multi-LLM](https://img.shields.io/badge/AI_Engine-OpenAI_|_Claude_|_Gemini_|_Nvidia_|_Ollama-8A2BE2?style=for-the-badge)](app/Services/AI/)
+[![Payments](https://img.shields.io/badge/Payments-Iyzico_%7C_Stripe-635BFF?style=for-the-badge)](app/Services/Payment/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue?style=for-the-badge)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-55%20Passed-success?style=for-the-badge&logo=php&logoColor=white)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-60%20Passed%20(128%20Assertions)-success?style=for-the-badge&logo=php&logoColor=white)](tests/)
 [![GitHub Stars](https://img.shields.io/github/stars/adacreativeco/NexusADA?style=for-the-badge&color=ffd700)](https://github.com/adacreativeco/NexusADA/stargazers)
 
 <br/>
@@ -23,35 +24,76 @@
 
 ---
 
-> [!WARNING]
-> ### ⚠️ Important Notice / Active Development & Prototype Status
-> **This project is an open-source reference architecture and active development prototype.**
-> Certain features showcased in promotional materials or landing pages may be in active development, operate in simulated/mock fallback mode (e.g. AI services when no API key is configured), or require specific external infrastructure setup (IMAP mail servers, Redis workers, NativePHP Electron builds).
-> 
-> *The project is provided "as is" under the Apache 2.0 License as an enterprise reference implementation.*
+> [!NOTE]
+> ### 🛡️ Enterprise Reference Architecture (v1.1.0)
+> ADA Co-OS is an open-source enterprise operations reference system. It implements multi-tenant isolation, 3-tier RBAC, a multi-provider AI gateway, vector semantic memory, conditional workflow execution, payment gateways (Iyzico, Stripe), cryptographic digital signatures, IMAP email intelligence, and Critical Path Method (CPM) project scheduling.
 
 ---
 
-## 🎯 Overview
+## 🏗️ System Architecture
 
-**ADA Co-OS (NexusADA)** is a corporate operations and digital intelligence platform engineered by **ADA Creative Co.** for creative agencies, consultancies, and multi-disciplinary teams. It explores the convergence of client relationships, project delivery, financial proposals, IMAP communications, workflow automations, and AI business memory in a row-level isolated multi-tenant architecture.
+```mermaid
+flowchart TD
+    subgraph ClientAccess["🌐 Access Channels & Endpoints"]
+        WebAdmin["💻 Web Admin Portal (/admin)"]
+        Webmaster["🛡️ Webmaster Control Center (/platform)"]
+        ClientPortal["👥 Self-Service Client Portal (/client)"]
+        DesktopApp["🖥️ NativePHP Electron Desktop App"]
+        RESTClients["📡 Sanctum Authenticated REST API (/api/v1)"]
+    end
+
+    subgraph SecurityLayer["🔐 Security & Isolation Layer"]
+        TenantScope["Multi-Tenant Isolation (BelongsToTenant)"]
+        RBAC["3-Tier RBAC Engine (24 Roles / 54 Permissions)"]
+        TwoFactor["Google2FA Two-Factor Authentication"]
+        AuditTrail["OwenIt Audit Trail & Activity Logging"]
+    end
+
+    subgraph CoreEngines["⚡ Digital Intelligence & Execution Core"]
+        AIGateway["Multi-LLM Gateway (OpenAI, Claude, Gemini, Nvidia, Ollama)"]
+        VectorStore["Tenant-Scoped Semantic Vector Store & Cosine Search"]
+        ToolRegistry["Autonomous Agent Tool Execution (Tasks, CRM, Proposals)"]
+        WorkflowDAG["Conditional Workflow & Human Approval Gate Engine"]
+        PaymentEngine["Multi-Gateway Payment Engine (Iyzico, Stripe, Sandbox)"]
+        DigitalSign["Cryptographic SHA-256 E-Signature Verification"]
+        EmailIntel["IMAP Email Threading & Auto-Ticketing"]
+        CPMEngine["Critical Path Method (CPM) & Resource Capacity Heatmap"]
+    end
+
+    subgraph DataLayer["🗄️ Persistence & Storage"]
+        MySQL["Primary Database (MySQL 8 / PostgreSQL / SQLite)"]
+        Redis["Redis Cache & Asynchronous Job Queues"]
+    end
+
+    ClientAccess --> SecurityLayer
+    SecurityLayer --> CoreEngines
+    CoreEngines <--> DataLayer
+```
 
 ---
 
-## 📊 Module Implementation & Readiness Status
+## 🚀 Key Enterprise Capabilities
 
-| Module / Feature | Status | Description & Implementation Details |
-|---|:---:|---|
-| **Multi-Tenant Architecture** | 🟢 **Production Ready** | Row-level data isolation via `BelongsToTenant` trait, tenant scoping, and isolated workspace routing. |
-| **3-Tier RBAC & 2FA** | 🟢 **Production Ready** | 24 roles, 54 permissions, Platform/Tenant scopes, and Google Authenticator TOTP 2FA. |
-| **Webmaster Portal & Impersonation** | 🟢 **Production Ready** | `/platform` control center, tenant provisioning, plan configuration, and live session impersonation. |
-| **Sanctum REST API (`/api/v1`)** | 🟢 **Production Ready** | Token-authenticated endpoints for projects, tasks, clients, campaigns, and reports. |
-| **KVKK Compliance & Account Deletion** | 🟢 **Production Ready** | Self-service account anonymization, data JSON export, and audit-safe soft deletion. |
-| **PWA & Mobile Manifest** | 🟢 **Production Ready** | Service worker caching, offline capability, and mobile app manifest. |
-| **AI Intelligence & Memory Core** | 🟡 **Developer Preview / Mock Fallback** | `AIMemory.php` context store; uses NVIDIA/OpenAI API when keys are set, otherwise falls back to deterministic mock responses. |
-| **Workflow Automations** | 🟡 **Developer Preview** | Event-driven trigger engine dispatching to Slack, Discord, and webhooks; advanced condition builder in progress. |
-| **IMAP E-Mail Synchronization** | 🟡 **Requires Setup** | Two-way IMAP sync via `webklex/laravel-imap`; requires external mail credentials and background cron (`imap:sync`). |
-| **Native Desktop App (Electron)** | 🛠️ **Prototype Build** | NativePHP / Electron scaffolding configured; requires local NativePHP build toolchain for Windows/macOS binary packaging. |
+### 1. 🤖 Multi-LLM Gateway & Semantic RAG Vector Memory
+- **Universal Provider Routing:** Pluggable AI gateway supporting **OpenAI (GPT-4o)**, **Anthropic (Claude 3.5 Sonnet)**, **Google (Gemini 2.0)**, **NVIDIA NIM**, and local **Ollama** with deterministic mock fallbacks.
+- **Tenant-Scoped Vector Store:** Computes vector embeddings and performs cosine similarity search across corporate memories (`VectorStore.php`).
+- **Autonomous Tool Calling:** Autonomous execution registry for agentic actions (`create_task`, `create_proposal`, `lookup_client`).
+
+### 2. ⚡ Conditional DAG Workflows & Human Approval Gates
+- **Dynamic Branching:** Evaluates record conditions (`>`, `<`, `==`, `contains`, `in`) to steer business processes dynamically (`ConditionEvaluator.php`).
+- **Human-in-the-Loop:** Cryptographically signed approval gates for management sign-offs on budgets and proposals (`ApprovalGateService.php`).
+
+### 3. 💼 Multi-Gateway Payments & Cryptographic E-Signatures
+- **Payment Processing:** Unified payment provider architecture supporting **Iyzico**, **Stripe**, and sandbox test gateways (`PaymentService.php`).
+- **SHA-256 Digital Signatures:** Generates verifiable audit certificates capturing signer identity, IP, user agent, timestamp, and SHA-256 HMAC integrity hashes (`DigitalSignatureService.php`).
+
+### 4. 📧 IMAP Email Intelligence & AI Auto-Ticketing
+- **Conversation Threading:** Automatic thread stitching via `In-Reply-To` and subject normalization (`EmailThreadingService.php`).
+- **Inbound AI Processing:** Sentiment analysis, urgency scoring, and automated task extraction from customer emails (`EmailIntelligenceService.php`).
+
+### 5. 📅 Critical Path Method (CPM) & Resource Leveling
+- **CPM Schedule Analysis:** Forward and backward pass calculation identifying project duration, early/late dates, total float/slack, and critical path task chains (`CriticalPathEngine.php`).
+- **Workload Capacity Heatmap:** Tracks daily workload hours per employee, flagging over-allocation (>8h/day) to prevent team burnout (`ResourceAllocationService.php`).
 
 ---
 
@@ -79,50 +121,21 @@
 
 ---
 
-## 🏗️ System Architecture
+## 📡 REST API Reference
 
-```mermaid
-flowchart TD
-    subgraph ClientAccess["🌐 Access Channels & Endpoints"]
-        WebAdmin["💻 Web Admin Portal (/admin)"]
-        Webmaster["🛡️ Webmaster Control Center (/platform)"]
-        ClientPortal["👥 Self-Service Client Portal (/client)"]
-        DesktopApp["🖥️ NativePHP Electron Desktop App (Prototype)"]
-        RESTClients["📡 Sanctum Authenticated API Clients (/api/v1)"]
-    end
+Sanctum-authenticated REST API endpoints available under `/api/v1`:
 
-    subgraph SecurityLayer["🔐 Security & Isolation Layer"]
-        TenantScope["Multi-Tenant Isolation (BelongsToTenant)"]
-        RBAC["3-Tier RBAC Engine (24 Roles / 54 Permissions)"]
-        TwoFactor["Google2FA Two-Factor Authentication"]
-        AuditTrail["OwenIt Audit Trail & Activity Logging"]
-    end
-
-    subgraph CoreServices["🧠 Digital Intelligence Core"]
-        AIMemory["AI Business Memory & Context Store (AIMemory.php)"]
-        Automation["Workflow Automation Engine (Triggers & Webhooks)"]
-        ImapSync["Two-Way IMAP E-Mail Sync (webklex/laravel-imap)"]
-        PdfEngine["Automated DomPDF Executive Report Generator"]
-    end
-
-    subgraph DataLayer["🗄️ Persistence & Storage"]
-        MySQL["Primary Database (MySQL 8 / PostgreSQL / SQLite)"]
-        Redis["Redis Cache & Asynchronous Job Queues"]
-    end
-
-    ClientAccess --> SecurityLayer
-    SecurityLayer --> CoreServices
-    CoreServices <--> DataLayer
-```
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/v1/projects` | `GET`, `POST` | List and create multi-tenant projects. |
+| `/api/v1/tasks` | `GET`, `POST`, `PUT`, `DELETE` | CRUD management for project tasks and milestones. |
+| `/api/v1/clients` | `GET`, `POST`, `PUT` | Client CRM profiles, contacts, and billing terms. |
+| `/api/v1/campaigns` | `GET`, `POST` | Marketing campaign tracking and budget utilization. |
+| `/api/v1/reports` | `GET` | Generates aggregated analytics reports and metric summaries. |
 
 ---
 
-## 🛠️ Quick Start (Developer Setup)
-
-### Prerequisites
-- PHP 8.2+ (with `pdo`, `sqlite3`, `curl`, `mbstring`, `intl` extensions)
-- Composer
-- Node.js & npm
+## 🛠️ Quick Start
 
 ### 1. Clone & Install Dependencies
 ```bash
@@ -143,7 +156,7 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
-### 4. Run Automated Test Suite (55 Tests)
+### 4. Run Automated Test Suite (60 Tests, 128 Assertions)
 ```bash
 php artisan test
 ```

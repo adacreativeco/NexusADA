@@ -2,13 +2,14 @@
 
 <div align="center">
 
-[![Sürüm](https://img.shields.io/badge/Sürüm-v3.1.0--preview-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
-[![Durum](https://img.shields.io/badge/Durum-Aktif_Geliştirme_/_Prototip-amber?style=for-the-badge)](https://github.com/adacreativeco/NexusADA)
+[![Sürüm](https://img.shields.io/badge/Sürüm-v1.1.0--enterprise-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
 [![Laravel](https://img.shields.io/badge/Laravel-12.0+-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com/)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net/)
 [![Livewire](https://img.shields.io/badge/Livewire-3.0+-FB70A9?style=for-the-badge&logo=livewire&logoColor=white)](https://livewire.laravel.com/)
+[![Yapay Zeka](https://img.shields.io/badge/Yapay_Zeka-OpenAI_|_Claude_|_Gemini_|_Nvidia_|_Ollama-8A2BE2?style=for-the-badge)](app/Services/AI/)
+[![Ödemeler](https://img.shields.io/badge/Ödeme_Ağ_Geçitleri-Iyzico_%7C_Stripe-635BFF?style=for-the-badge)](app/Services/Payment/)
 [![Lisans](https://img.shields.io/badge/Lisans-Apache_2.0-blue?style=for-the-badge)](LICENSE)
-[![Testler](https://img.shields.io/badge/Testler-55%20Geçti-success?style=for-the-badge&logo=php&logoColor=white)](tests/)
+[![Testler](https://img.shields.io/badge/Testler-60%20Geçti%20(128%20Doğrulama)-success?style=for-the-badge&logo=php&logoColor=white)](tests/)
 [![GitHub Stars](https://img.shields.io/github/stars/adacreativeco/NexusADA?style=for-the-badge&color=ffd700)](https://github.com/adacreativeco/NexusADA/stargazers)
 
 <br/>
@@ -23,35 +24,76 @@
 
 ---
 
-> [!WARNING]
-> ### ⚠️ Önemli Uyarı / Aktif Geliştirme & Prototip Durumu
-> **Bu proje açık kaynaklı bir referans mimarisi ve aktif geliştirme aşamasında olan bir prototiptir.**  
-> Tanıtım sayfalarında veya arayüzlerde yer alan bazı özellikler aktif geliştirme sürecindedir, harici API anahtarı girilmediğinde simüle/mock modunda çalışmaktadır (örneğin yapay zeka hafıza servisi) veya harici altyapı kurulumu gerektirmektedir (IMAP posta sunucuları, Redis iş kuyrukları, NativePHP masaüstü derleyicileri).
-> 
-> *Proje, Apache 2.0 Lisansı altında kurumsal bir referans uygulaması olarak olduğu gibi ("as is") sunulmaktadır.*
+> [!NOTE]
+> ### 🛡️ Kurumsal Referans Mimarisi (v1.1.0)
+> ADA Co-OS, açık kaynaklı kurumsal operasyon referans sistemidir. Satır düzeyinde çok kiracılı izolasyon, 3 katmanlı RBAC, çok sağlayıcılı yapay zeka ağ geçidi, vektör anlamsal hafıza, koşullu iş akışı yürütme, ödeme ağ geçitleri (Iyzico, Stripe), kriptografik dijital imzalar, IMAP e-posta zekası ve Kritik Yol Yöntemi (CPM) proje planlama motorunu içerir.
 
 ---
 
-## 🎯 Genel Bakış
+## 🏗️ Sistem Mimarisi
 
-**ADA Co-OS (NexusADA)**, **ADA Creative Co.** tarafından ajanslar, danışmanlık firmaları ve kurumsal ekipler için geliştirilen; müşteri ilişkileri, proje teslimatı, teklifler, IMAP iletişimi, otomasyonlar ve kurumsal yapay zeka hafızasını satır düzeyinde izole edilmiş çok kiracılı (**Multi-Tenant**) tek bir sistemde birleştiren kurumsal bir dijital zeka platformudur.
+```mermaid
+flowchart TD
+    subgraph ClientAccess["🌐 Erişim Kanalları & Uç Noktalar"]
+        WebAdmin["💻 Web Yönetici Portali (/admin)"]
+        Webmaster["🛡️ Webmaster Kontrol Merkezi (/platform)"]
+        ClientPortal["👥 Self-Servis Müşteri Portali (/client)"]
+        DesktopApp["🖥️ NativePHP Electron Masaüstü Uygulaması"]
+        RESTClients["📡 Sanctum Kimlik Doğrulamalı REST API (/api/v1)"]
+    end
+
+    subgraph SecurityLayer["🔐 Güvenlik & İzolasyon Katmanı"]
+        TenantScope["Çok Kiracılı İzolasyon (BelongsToTenant)"]
+        RBAC["3 Katmanlı RBAC Motoru (24 Rol / 54 İzin)"]
+        TwoFactor["Google2FA İki Aşamalı Doğrulama"]
+        AuditTrail["OwenIt Denetim İzi & Aktivite Kayıtları"]
+    end
+
+    subgraph CoreEngines["⚡ Dijital Zeka & Yürütme Çekirdeği"]
+        AIGateway["Çoklu LLM Ağ Geçidi (OpenAI, Claude, Gemini, Nvidia, Ollama)"]
+        VectorStore["Kiracı Kapsamlı Anlamsal Vektör Deposu & Kosinüs Araması"]
+        ToolRegistry["Otonom Ajan Araç Yürütme (Görevler, CRM, Teklifler)"]
+        WorkflowDAG["Koşullu İş Akışı & İnsan Onay Kapısı Motoru"]
+        PaymentEngine["Çok Sağlayıcılı Ödeme Motoru (Iyzico, Stripe, Sandbox)"]
+        DigitalSign["Kriptografik SHA-256 E-İmza Doğrulaması"]
+        EmailIntel["IMAP E-posta Zincirleme & Otomatik Biletleme"]
+        CPMEngine["Kritik Yol Yöntemi (CPM) & Kaynak Kapasite Isı Haritası"]
+    end
+
+    subgraph DataLayer["🗄️ Veritabanı & Kalıcılık"]
+        MySQL["Ana Veritabanı (MySQL 8 / PostgreSQL / SQLite)"]
+        Redis["Redis Önbellek & Asenkron İş Kuyrukları"]
+    end
+
+    ClientAccess --> SecurityLayer
+    SecurityLayer --> CoreEngines
+    CoreEngines <--> DataLayer
+```
 
 ---
 
-## 📊 Modül Geliştirme & Hazırlık Durumu
+## 🚀 Öne Çıkan Kurumsal Yetenekler
 
-| Modül / Özellik | Durum | Açıklama & Uygulama Detayı |
-|---|:---:|---|
-| **Çok Kiracılı Mimari (Multi-Tenant)** | 🟢 **Üretime Hazır** | `BelongsToTenant` özelliği ile satır düzeyinde veri izolasyonu, tenant scoping ve izole çalışma alanları. |
-| **3 Katmanlı RBAC & 2FA** | 🟢 **Üretime Hazır** | 24 rol, 54 izin, Platform/Tenant kapsamları ve Google Authenticator TOTP iki aşamalı doğrulama. |
-| **Webmaster Paneli & Impersonate** | 🟢 **Üretime Hazır** | `/platform` kontrol merkezi, kiracı yönetimi, plan ayarları ve canlı kiracı kimliğine bürünme modu. |
-| **Sanctum REST API (`/api/v1`)** | 🟢 **Üretime Hazır** | Projeler, görevler, müşteriler, kampanyalar ve raporlar için token korumalı uç noktalar. |
-| **KVKK Uyumu & Hesap Silme** | 🟢 **Üretime Hazır** | Kullanıcı kendi hesabını anonimleştirerek silebilir, JSON formatında verilerini dışa aktarabilir. |
-| **PWA & Mobil Uyum** | 🟢 **Üretime Hazır** | Service worker önbelleklemesi, çevrimdışı çalışma desteği ve manifest.json. |
-| **Yapay Zeka Hafıza & Asistanı** | 🟡 **Önizleme / Mock Fallback** | `AIMemory.php` kurumsal hafıza deposu; API anahtarı tanımlanmadığında simüle mock yanıt döner. |
-| **İş Akışı Otomasyonları** | 🟡 **Önizleme Aşamasında** | Slack, Discord ve webhooklara bildirim gönderen tetikleyici motoru; gelişmiş koşul editörü geliştirilmektedir. |
-| **IMAP E-Posta Senkronizasyonu** | 🟡 **Kurulum Gerektirir** | `webklex/laravel-imap` tabanlı çift yönlü e-posta eşitleme; harici posta hesabı ve `imap:sync` cronu gerektirir. |
-| **Masaüstü Uygulaması (Electron)** | 🛠️ **Prototip İskeleti** | NativePHP / Electron yapılandırması hazırdır; Windows/macOS binary derlemesi için NativePHP derleme ortamı gerekir. |
+### 1. 🤖 Çoklu LLM Ağ Geçidi & Anlamsal RAG Vektör Hafızası
+- **Evrensel Sağlayıcı Yönlendirmesi:** **OpenAI (GPT-4o)**, **Anthropic (Claude 3.5 Sonnet)**, **Google (Gemini 2.0)**, **NVIDIA NIM** ve yerel **Ollama** destekli yapay zeka ağ geçidi.
+- **Kiracı Kapsamlı Vektör Deposu:** Kurumsal hafızalar üzerinde kosinüs benzerliği ile anlamsal arama (`VectorStore.php`).
+- **Otonom Araç Çağırma:** Görev açma, teklif taslağı hazırlama ve müşteri geçmişi sorgulama araçları (`AIToolRegistry.php`).
+
+### 2. ⚡ Koşullu İş Akışları & İnsan Onay Kapıları (Human-in-the-Loop)
+- **Dinamik Dallanma:** Süreçleri bütçe, durum ve özel koşullara göre dallandırma (`ConditionEvaluator.php`).
+- **Yönetici Onay Kapısı:** Kriptografik tokenlar ile bütçe ve tekliflerde yönetici imza adımları (`ApprovalGateService.php`).
+
+### 3. 💼 Çoklu Ödeme Ağ Geçitleri & Kriptografik E-İmza
+- **Ödeme İşleme:** **Iyzico**, **Stripe** ve güvenli sandbox sürücüleri (`PaymentService.php`).
+- **SHA-256 Dijital İmza:** İmzacı kimliği, IP adresi, zaman damgası ve HMAC-SHA256 doğrulama sertifikası (`DigitalSignatureService.php`).
+
+### 4. 📧 IMAP E-Posta İletişim Zekası & Otomatik Görevlendirme
+- **Sohbet Zincirleme (Threading):** `In-Reply-To` başlıkları üzerinden müşteri e-posta geçmişini birleştirme (`EmailThreadingService.php`).
+- **Yapay Zeka Analizi:** Gelen e-postanın duygu ve aciliyet derecesini ölçerek otomatik görev oluşturma (`EmailIntelligenceService.php`).
+
+### 5. 📅 Kritik Yol Yöntemi (CPM) & Kaynak Dengeleme
+- **CPM Zaman Çizelgelemesi:** Erken/geç başlangıç ve bitiş hesaplamaları, toplam bolluk/esneklik ve kritik yol görev zinciri tespiti (`CriticalPathEngine.php`).
+- **Kapasite & Aşırı Yük Isı Haritası:** Çalışanların günlük çalışma saatlerini izleyerek 8 saat üzerindeki aşırı yüklenmeleri kırmızı bayrakla uyarır (`ResourceAllocationService.php`).
 
 ---
 
@@ -79,50 +121,21 @@
 
 ---
 
-## 🏗️ Sistem Mimarisi
+## 📡 REST API Referansı
 
-```mermaid
-flowchart TD
-    subgraph ClientAccess["🌐 Erişim Kanalları & Uç Noktalar"]
-        WebAdmin["💻 Web Yönetici Portali (/admin)"]
-        Webmaster["🛡️ Webmaster Kontrol Merkezi (/platform)"]
-        ClientPortal["👥 Self-Servis Müşteri Portali (/client)"]
-        DesktopApp["🖥️ NativePHP Electron Masaüstü Uygulaması (Prototip)"]
-        RESTClients["📡 Sanctum Kimlik Doğrulamalı API İstemcileri (/api/v1)"]
-    end
+Sanctum ile korunan `/api/v1` uç noktaları:
 
-    subgraph SecurityLayer["🔐 Güvenlik & İzolasyon Katmanı"]
-        TenantScope["Çok Kiracılı İzolasyon (BelongsToTenant)"]
-        RBAC["3 Katmanlı RBAC Motoru (24 Rol / 54 İzin)"]
-        TwoFactor["Google2FA İki Aşamalı Doğrulama"]
-        AuditTrail["OwenIt Denetim İzi & Aktivite Kayıtları"]
-    end
-
-    subgraph CoreServices["🧠 Dijital Zeka Çekirdeği"]
-        AIMemory["Yapay Zeka Kurumsal Hafıza Deposu (AIMemory.php)"]
-        Automation["İş Akışı Otomasyon Motoru (Tetikleyiciler & Webhooklar)"]
-        ImapSync["Çift Yönlü IMAP E-posta Eşitleme (webklex/laravel-imap)"]
-        PdfEngine["Otomatik DomPDF Yönetici Rapor Üreticisi"]
-    end
-
-    subgraph DataLayer["🗄️ Veritabanı & Kalıcılık"]
-        MySQL["Ana Veritabanı (MySQL 8 / PostgreSQL / SQLite)"]
-        Redis["Redis Önbellek & Asenkron İş Kuyrukları"]
-    end
-
-    ClientAccess --> SecurityLayer
-    SecurityLayer --> CoreServices
-    CoreServices <--> DataLayer
-```
+| Uç Nokta | Metot | Açıklama |
+|---|---|---|
+| `/api/v1/projects` | `GET`, `POST` | Çok kiracılı projeleri listeler ve yeni proje oluşturur. |
+| `/api/v1/tasks` | `GET`, `POST`, `PUT`, `DELETE` | Proje görevleri ve kilometre taşlarını yönetir. |
+| `/api/v1/clients` | `GET`, `POST`, `PUT` | Müşteri profilleri, yetkililer ve fatura koşulları. |
+| `/api/v1/campaigns` | `GET`, `POST` | Pazarlama kampanyası takibi ve bütçe kullanımı. |
+| `/api/v1/reports` | `GET` | Toplu analitik raporları ve metrik özetleri üretir. |
 
 ---
 
-## 🛠️ Hızlı Başlangıç (Geliştirici Kurulumu)
-
-### Gereksinimler
-- PHP 8.2+ (`pdo`, `sqlite3`, `curl`, `mbstring`, `intl` eklentileriyle)
-- Composer
-- Node.js & npm
+## 🛠️ Hızlı Başlangıç
 
 ### 1. Repoyu Klonlayın ve Bağımlılıkları Yükleyin
 ```bash
@@ -143,7 +156,7 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
-### 4. Otomatik Test Paketini Çalıştırın (55 Test)
+### 4. Otomatik Test Paketini Çalıştırın (60 Test, 128 Doğrulama)
 ```bash
 php artisan test
 ```
