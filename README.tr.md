@@ -2,15 +2,14 @@
 
 <div align="center">
 
+[![Sürüm](https://img.shields.io/badge/Sürüm-v3.1.0--preview-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
+[![Durum](https://img.shields.io/badge/Durum-Aktif_Geliştirme_/_Prototip-amber?style=for-the-badge)](https://github.com/adacreativeco/NexusADA)
 [![Laravel](https://img.shields.io/badge/Laravel-12.0+-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com/)
 [![PHP](https://img.shields.io/badge/PHP-8.4+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net/)
 [![Livewire](https://img.shields.io/badge/Livewire-3.0+-FB70A9?style=for-the-badge&logo=livewire&logoColor=white)](https://livewire.laravel.com/)
-[![Masaüstü](https://img.shields.io/badge/Masaüstü-NativePHP_%7C_Electron-47848F?style=for-the-badge&logo=electron&logoColor=white)](https://nativephp.com/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4+-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Lisans](https://img.shields.io/badge/Lisans-Apache_2.0-blue?style=for-the-badge)](LICENSE)
 [![Testler](https://img.shields.io/badge/Testler-55%20Geçti-success?style=for-the-badge&logo=php&logoColor=white)](tests/)
 [![GitHub Stars](https://img.shields.io/github/stars/adacreativeco/NexusADA?style=for-the-badge&color=ffd700)](https://github.com/adacreativeco/NexusADA/stargazers)
-[![Sürüm](https://img.shields.io/badge/Sürüm-v1.0.0-6366f1?style=for-the-badge)](https://github.com/adacreativeco/NexusADA/releases)
 
 <br/>
 
@@ -24,7 +23,35 @@
 
 ---
 
-**ADA Co-OS (NexusADA)**, **ADA Creative Co.** tarafından yaratıcı ajanslar, danışmanlık firmaları ve kurumsal iletişim ekipleri için geliştirilmiş hepsi bir arada dijital zeka ve kurumsal yönetim platformudur. Müşteri ilişkileri, proje teslimatı, finansal teklifler, IMAP e-posta iletişimi, iş akışı otomasyonları ve kurumsal yapay zeka hafızasını satır düzeyinde izole edilmiş çok kiracılı (**Multi-Tenant**) tek bir sistemde ve bağımsız masaüstü uygulamasıyla bir araya getirir.
+> [!WARNING]
+> ### ⚠️ Önemli Uyarı / Aktif Geliştirme & Prototip Durumu
+> **Bu proje açık kaynaklı bir referans mimarisi ve aktif geliştirme aşamasında olan bir prototiptir.**  
+> Tanıtım sayfalarında veya arayüzlerde yer alan bazı özellikler aktif geliştirme sürecindedir, harici API anahtarı girilmediğinde simüle/mock modunda çalışmaktadır (örneğin yapay zeka hafıza servisi) veya harici altyapı kurulumu gerektirmektedir (IMAP posta sunucuları, Redis iş kuyrukları, NativePHP masaüstü derleyicileri).
+> 
+> *Proje, Apache 2.0 Lisansı altında kurumsal bir referans uygulaması olarak olduğu gibi ("as is") sunulmaktadır.*
+
+---
+
+## 🎯 Genel Bakış
+
+**ADA Co-OS (NexusADA)**, **ADA Creative Co.** tarafından ajanslar, danışmanlık firmaları ve kurumsal ekipler için geliştirilen; müşteri ilişkileri, proje teslimatı, teklifler, IMAP iletişimi, otomasyonlar ve kurumsal yapay zeka hafızasını satır düzeyinde izole edilmiş çok kiracılı (**Multi-Tenant**) tek bir sistemde birleştiren kurumsal bir dijital zeka platformudur.
+
+---
+
+## 📊 Modül Geliştirme & Hazırlık Durumu
+
+| Modül / Özellik | Durum | Açıklama & Uygulama Detayı |
+|---|:---:|---|
+| **Çok Kiracılı Mimari (Multi-Tenant)** | 🟢 **Üretime Hazır** | `BelongsToTenant` özelliği ile satır düzeyinde veri izolasyonu, tenant scoping ve izole çalışma alanları. |
+| **3 Katmanlı RBAC & 2FA** | 🟢 **Üretime Hazır** | 24 rol, 54 izin, Platform/Tenant kapsamları ve Google Authenticator TOTP iki aşamalı doğrulama. |
+| **Webmaster Paneli & Impersonate** | 🟢 **Üretime Hazır** | `/platform` kontrol merkezi, kiracı yönetimi, plan ayarları ve canlı kiracı kimliğine bürünme modu. |
+| **Sanctum REST API (`/api/v1`)** | 🟢 **Üretime Hazır** | Projeler, görevler, müşteriler, kampanyalar ve raporlar için token korumalı uç noktalar. |
+| **KVKK Uyumu & Hesap Silme** | 🟢 **Üretime Hazır** | Kullanıcı kendi hesabını anonimleştirerek silebilir, JSON formatında verilerini dışa aktarabilir. |
+| **PWA & Mobil Uyum** | 🟢 **Üretime Hazır** | Service worker önbelleklemesi, çevrimdışı çalışma desteği ve manifest.json. |
+| **Yapay Zeka Hafıza & Asistanı** | 🟡 **Önizleme / Mock Fallback** | `AIMemory.php` kurumsal hafıza deposu; API anahtarı tanımlanmadığında simüle mock yanıt döner. |
+| **İş Akışı Otomasyonları** | 🟡 **Önizleme Aşamasında** | Slack, Discord ve webhooklara bildirim gönderen tetikleyici motoru; gelişmiş koşul editörü geliştirilmektedir. |
+| **IMAP E-Posta Senkronizasyonu** | 🟡 **Kurulum Gerektirir** | `webklex/laravel-imap` tabanlı çift yönlü e-posta eşitleme; harici posta hesabı ve `imap:sync` cronu gerektirir. |
+| **Masaüstü Uygulaması (Electron)** | 🛠️ **Prototip İskeleti** | NativePHP / Electron yapılandırması hazırdır; Windows/macOS binary derlemesi için NativePHP derleme ortamı gerekir. |
 
 ---
 
@@ -60,7 +87,7 @@ flowchart TD
         WebAdmin["💻 Web Yönetici Portali (/admin)"]
         Webmaster["🛡️ Webmaster Kontrol Merkezi (/platform)"]
         ClientPortal["👥 Self-Servis Müşteri Portali (/client)"]
-        DesktopApp["🖥️ NativePHP Electron Masaüstü Uygulaması"]
+        DesktopApp["🖥️ NativePHP Electron Masaüstü Uygulaması (Prototip)"]
         RESTClients["📡 Sanctum Kimlik Doğrulamalı API İstemcileri (/api/v1)"]
     end
 
@@ -74,7 +101,7 @@ flowchart TD
     subgraph CoreServices["🧠 Dijital Zeka Çekirdeği"]
         AIMemory["Yapay Zeka Kurumsal Hafıza Deposu (AIMemory.php)"]
         Automation["İş Akışı Otomasyon Motoru (Tetikleyiciler & Webhooklar)"]
-        ImapSync["Çift Yönlü IMAP E-posta Eşitleme (OAuth2 / Uygulama Şifreleri)"]
+        ImapSync["Çift Yönlü IMAP E-posta Eşitleme (webklex/laravel-imap)"]
         PdfEngine["Otomatik DomPDF Yönetici Rapor Üreticisi"]
     end
 
@@ -90,49 +117,7 @@ flowchart TD
 
 ---
 
-## 🚀 Öne Çıkan Yetenekler
-
-### 1. 🏢 Satır Düzeyinde Çok Kiracılı (Multi-Tenant) Mimari
-- Global sorgu filtrelemesi ile izole edilmiş organizasyon ve çalışma alanları (`BelongsToTenant` özelliği).
-- Platform sahibi için `/platform` webmaster paneli, plan yönetimi ve herhangi bir kiracının gözünden sistemi görmeyi sağlayan **Impersonate (Kimliğe Bürünme)** modu.
-
-### 2. 🛡️ 3 Katmanlı Kurumsal RBAC (24 Rol / 54 İzin)
-- Platform, Kiracı ve Çalışma Alanı düzeyinde detaylı yetkilendirme.
-- Yöneticiler için Google Authenticator ile zorunlu iki aşamalı doğrulama (2FA).
-
-### 3. 🤖 Yapay Zeka Kurumsal Hafızası & Günlük Brifingler
-- Kurumsal bilgi birikimini, müşteri tercihlerini ve geçmiş kararları saklayan bağlamsal hafıza motoru (`AIMemory.php`).
-- Ekip ilerlemesini, yaklaşan teslim tarihlerini ve riskleri derleyen otomatik günlük yönetici brifingleri.
-
-### 4. ⚡ İş Akışı Otomasyon Motoru
-- Proje tamamlanması, fatura onayı veya teslim tarihi gecikmesi gibi olaylarda **Slack**, **Discord** veya özel webhook uç noktalarına anında bildirim gönderen tetikleyici motoru.
-
-### 5. 📧 Çift Yönlü IMAP E-Posta Entegrasyonu
-- Şifrelenmiş kimlik bilgileriyle müşteri e-posta yazışmalarını doğrudan ilgili proje zaman tüneline bağlayan güvenli IMAP bağlayıcısı.
-
-### 6. 📄 Otomatik PDF Yönetici Raporlaması
-- Müşteri teklifleri, proje retrospektifleri ve kampanya denetimlerini DomPDF ile tek tıkla profesyonel PDF formatında indirme.
-
-### 7. 🖥️ Masaüstü Uygulaması (NativePHP / Electron)
-- İnternet kesintilerinde bile çalışan, yerel pencere kontrolleri ve masaüstü bildirimleri sunan bağımsız Windows kurulum paketi (`~106 MB`).
-
----
-
-## 📡 REST API Referansı
-
-Sanctum ile korunan `/api/v1` uç noktaları:
-
-| Uç Nokta | Metot | Açıklama |
-|---|---|---|
-| `/api/v1/projects` | `GET`, `POST` | Çok kiracılı projeleri listeler ve yeni proje oluşturur. |
-| `/api/v1/tasks` | `GET`, `POST`, `PUT`, `DELETE` | Proje görevleri ve kilometre taşlarını yönetir. |
-| `/api/v1/clients` | `GET`, `POST`, `PUT` | Müşteri profilleri, yetkililer ve fatura koşulları. |
-| `/api/v1/campaigns` | `GET`, `POST` | Pazarlama kampanyası takibi ve bütçe kullanımı. |
-| `/api/v1/reports` | `GET` | Toplu analitik raporları ve metrik özetleri üretir. |
-
----
-
-## 🛠️ Hızlı Başlangıç
+## 🛠️ Hızlı Başlangıç (Geliştirici Kurulumu)
 
 ### Gereksinimler
 - PHP 8.2+ (`pdo`, `sqlite3`, `curl`, `mbstring`, `intl` eklentileriyle)
@@ -168,33 +153,6 @@ php artisan test
 php artisan serve
 ```
 Tarayıcınızda [http://localhost:8000](http://localhost:8000) adresini açın.
-
----
-
-## 📂 Proje Yapısı
-
-```
-nexus-ada/
-├── app/
-│   ├── Admin/Resources/           # Filament/Nexus tablo kaynak yapılandırmaları
-│   ├── Console/Commands/          # Artisan CLI komutları (IMAP senkronizasyonu vb.)
-│   ├── Http/Controllers/          # Web, API ve dışa aktarım kontrolcüleri
-│   ├── Http/Middleware/           # Çok kiracılı yapı, 2FA ve güvenlik başlıkları
-│   ├── Livewire/                  # Reaktif Livewire 3 bileşenleri (Admin, Client, Platform)
-│   ├── Models/                    # BelongsToTenant özellikli Eloquent modelleri
-│   ├── Observers/                 # Denetim izi ve durum değişikliği gözlemcileri
-│   └── Services/                  # Yapay zeka zekası, IMAP, otomasyon & PDF motoru
-├── config/                        # Laravel çekirdek ve paket yapılandırma dosyaları
-├── database/
-│   ├── migrations/                # Veritabanı şema göçleri
-│   └── seeders/                   # Rol, izin ve varsayılan kiracı tohumlayıcıları
-├── public/images/                 # Marka görselleri ve önizleme ekran görüntüleri
-├── resources/views/               # Koyu temalı Blade şablonları
-├── routes/                        # Web, API ve konsol rota tanımları
-└── tests/
-    ├── Feature/                   # 54 özellik testi (Auth, RBAC, Multi-Tenant, API)
-    └── Unit/                      # Birim test paketi (toplam 55 test, 104 doğrulama)
-```
 
 ---
 
