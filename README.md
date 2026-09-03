@@ -125,15 +125,15 @@ flowchart TD
 
 <br/>
 
-| 📁 Multi-Tenant Project Pipeline | 🤖 AI Assistant & Memory Core |
+| 📋 Interactive Task Kanban Board | 💼 Works & Business Pipeline |
 |:---:|:---:|
-| ![Project Pipeline Preview](public/images/preview-1.png) | ![AI Intelligence Preview](public/images/preview-2.png) |
-| *Task kanban boards, milestones, and client access.* | *Contextual business memory and prompt orchestration.* |
+| ![Task Kanban Preview](public/images/preview-1.png) | ![Works Pipeline Preview](public/images/preview-2.png) |
+| *Status columns, priority tags, and direct task assignment.* | *Pipeline deal tracking, revenue metrics, and activity feeds.* |
 
-| 💼 Client Portal & Invoicing | ⚡ Workflow Automation Engine |
+| 💼 Client Portal & Invoicing | 📅 Project Gantt Timeline |
 |:---:|:---:|
-| ![Client Portal Preview](public/images/preview-3.png) | ![Automations Preview](public/images/preview-4.png) |
-| *Self-service client portal, proposals & DomPDF reports.* | *Event-driven webhook dispatchers (Slack, Discord).* |
+| ![Client Portal Preview](public/images/preview-3.png) | ![Gantt Timeline Preview](public/images/preview-4.png) |
+| *Self-service client portal, proposals & DomPDF reports.* | *Interactive timeline scheduling with day/week zoom.* |
 
 </div>
 
@@ -151,7 +151,7 @@ Your enterprise portal will be instantly live on [http://localhost](http://local
 
 ---
 
-### Option B: Local PHP 8.4 Development
+### Option B: Local Development (PHP 8.3+ & SQLite)
 ```bash
 git clone https://github.com/adacreativeco/NexusADA.git
 cd NexusADA
@@ -163,6 +163,20 @@ php artisan migrate --seed
 php artisan test
 php artisan serve
 ```
+> [!TIP]
+> Out of the box, `.env.example` is configured with **SQLite** (`database/database.sqlite`), allowing instant local setup without installing a MySQL server. For Docker or production environments, MySQL 8 and Redis configurations are fully provided.
+
+---
+
+### 🔑 Default Demo Credentials (after `migrate --seed`)
+
+| Role / Function | Email | Password | Guard & Access |
+|---|---|---|---|
+| **Platform Admin (Webmaster)** | `admin@dhe.com` | `password` | Full Platform & `/platform` Control |
+| **Agency Administrator** | `admin@adacreative.co` | `password` | Tenant Webmaster & Operations |
+| **Project Manager (PM)** | `pm@dhe.com` | `password` | Projects, Works, Gantt & Timelines |
+| **Developer** | `dev@dhe.com` | `password` | Tasks, Kanban, Time Tracking |
+| **Designer** | `design@dhe.com` | `password` | Tasks & Brand Assets |
 
 ---
 

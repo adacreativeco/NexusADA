@@ -115,6 +115,30 @@ flowchart TD
 
 ---
 
+## 📸 Arayüz Galerisi (Visual Showcase)
+
+<div align="center">
+
+### 📊 Modern Operasyon ve Analitik Dashboard'u
+*Finansal KPI'lar, proje zaman çizelgeleri, aktif görevler ve AI operasyon brifingiyle yönetim merkezi.*
+![ADA Co-OS Dashboard](public/images/dashboard-preview.png)
+
+<br/>
+
+| 📋 İnteraktif Görev Kanban Panosu | 💼 İş ve Süreç Takip Pipeline'ı |
+|:---:|:---:|
+| ![Görev Kanban Önizleme](public/images/preview-1.png) | ![İş Pipeline Önizleme](public/images/preview-2.png) |
+| *Durum kolonları, öncelik rozetleri ve doğrudan görev atamaları.* | *Fırsat aşamaları, pipeline ciro değerleri ve canlı aktivite akışı.* |
+
+| 💼 Müşteri Portali & Faturalama | 📅 Proje Gantt Zaman Çizelgesi |
+|:---:|:---:|
+| ![Müşteri Portali Önizleme](public/images/preview-3.png) | ![Gantt Çizelgesi Önizleme](public/images/preview-4.png) |
+| *Self-servis müşteri girişi, teklifler ve DomPDF raporları.* | *Gün/hafta ölçeğinde interaktif proje takvimi.* |
+
+</div>
+
+---
+
 ## 🛠️ Hızlı Başlangıç & Dağıtım
 
 ### Seçenek A: 🐳 Docker Compose (Prodüksiyon İçin Önerilen)
@@ -127,7 +151,7 @@ Sisteminiz [http://localhost](http://localhost) üzerinde anında yayında!
 
 ---
 
-### Seçenek B: Yerel PHP 8.4 Geliştirme
+### Seçenek B: Yerel Geliştirme (PHP 8.3+ & SQLite)
 ```bash
 git clone https://github.com/adacreativeco/NexusADA.git
 cd NexusADA
@@ -139,6 +163,20 @@ php artisan migrate --seed
 php artisan test
 php artisan serve
 ```
+> [!TIP]
+> `.env.example` dosyası varsayılan olarak **SQLite** (`database/database.sqlite`) ile yapılandırılmıştır. Böylece yerel ortamda MySQL kurmaya gerek kalmadan sistem anında çalışır. Docker ve prodüksiyon ortamları için MySQL 8 ve Redis ayarları hazırdır.
+
+---
+
+### 🔑 Varsayılan Giriş Bilgileri (`migrate --seed` sonrası)
+
+| Rol / Yetki | E-posta | Şifre | Erişim Seviyesi |
+|---|---|---|---|
+| **Platform Yöneticisi (Webmaster)** | `admin@dhe.com` | `password` | Tam Platform ve `/platform` Kontrolü |
+| **Ajans Yöneticisi (Ada Admin)** | `admin@adacreative.co` | `password` | Kiracı Yönetimi ve Operasyonlar |
+| **Proje Yöneticisi (PM)** | `pm@dhe.com` | `password` | Projeler, İşler, Gantt ve Zaman Planları |
+| **Geliştirici (Dev)** | `dev@dhe.com` | `password` | Görevler, Kanban, Efor Takibi |
+| **Tasarımcı (Designer)** | `design@dhe.com` | `password` | Görevler ve Marka Varlıkları |
 
 ---
 

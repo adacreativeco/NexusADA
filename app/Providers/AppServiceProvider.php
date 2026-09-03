@@ -51,10 +51,19 @@ class AppServiceProvider extends ServiceProvider
             }
         );
 
-        if (DB::connection()->getDriverName() === 'sqlite') {
-            DB::statement('PRAGMA journal_mode=WAL;');
-            DB::statement('PRAGMA synchronous=NORMAL;');
-            DB::statement('PRAGMA busy_timeout=5000;');
-        }
+        \Illuminate\Support\Facades\Event::listen(
+            \Illuminate\Database\Events\ConnectionEstablished::class,
+            function ($event) {
+                if ($event->connection->getDriverName() === 'sqlite') {
+                    try {
+                        $event->connection->statement('PRAGMA journal_mode=WAL;');
+                        $event->connection->statement('PRAGMA synchronous=NORMAL;');
+                        $event->connection->statement('PRAGMA busy_timeout=5000;');
+                    } catch (\Throwable $e) {
+                        // In-memory or sandbox fallback
+                    }
+                }
+            }
+        );
     }
 }

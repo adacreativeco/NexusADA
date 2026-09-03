@@ -30,25 +30,29 @@ return new class extends Migration
         });
 
         // Add MySQL FULLTEXT indexes for semantic/fulltext universal search
-        try {
-            DB::statement('ALTER TABLE clients ADD FULLTEXT fulltext_client_name (name)');
-            DB::statement('ALTER TABLE works ADD FULLTEXT fulltext_work_title (title)');
-            DB::statement('ALTER TABLE proposals ADD FULLTEXT fulltext_proposal_title (title)');
-            DB::statement('ALTER TABLE tasks ADD FULLTEXT fulltext_task_title_desc (title, description)');
-        } catch (\Exception $e) {
-            report($e);
+        if (DB::connection()->getDriverName() === 'mysql') {
+            try {
+                DB::statement('ALTER TABLE clients ADD FULLTEXT fulltext_client_name (name)');
+                DB::statement('ALTER TABLE works ADD FULLTEXT fulltext_work_title (title)');
+                DB::statement('ALTER TABLE proposals ADD FULLTEXT fulltext_proposal_title (title)');
+                DB::statement('ALTER TABLE tasks ADD FULLTEXT fulltext_task_title_desc (title, description)');
+            } catch (\Exception $e) {
+                report($e);
+            }
         }
     }
 
     public function down(): void
     {
-        try {
-            DB::statement('ALTER TABLE tasks DROP INDEX fulltext_task_title_desc');
-            DB::statement('ALTER TABLE proposals DROP INDEX fulltext_proposal_title');
-            DB::statement('ALTER TABLE works DROP INDEX fulltext_work_title');
-            DB::statement('ALTER TABLE clients DROP INDEX fulltext_client_name');
-        } catch (\Exception $e) {
-            report($e);
+        if (DB::connection()->getDriverName() === 'mysql') {
+            try {
+                DB::statement('ALTER TABLE tasks DROP INDEX fulltext_task_title_desc');
+                DB::statement('ALTER TABLE proposals DROP INDEX fulltext_proposal_title');
+                DB::statement('ALTER TABLE works DROP INDEX fulltext_work_title');
+                DB::statement('ALTER TABLE clients DROP INDEX fulltext_client_name');
+            } catch (\Exception $e) {
+                report($e);
+            }
         }
 
         Schema::dropIfExists('entity_relations');

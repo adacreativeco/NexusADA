@@ -931,7 +931,14 @@ class NexusTable extends Component
             if (!empty($searchable)) {
                 $query->where(function ($q) use ($searchable) {
                     foreach ($searchable as $column) {
-                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                        if (str_contains($column, '.')) {
+                            [$relation, $relColumn] = explode('.', $column, 2);
+                            $q->orWhereHas($relation, function ($relQuery) use ($relColumn) {
+                                $relQuery->where($relColumn, 'like', '%' . $this->search . '%');
+                            });
+                        } else {
+                            $q->orWhere($column, 'like', '%' . $this->search . '%');
+                        }
                     }
                 });
             }

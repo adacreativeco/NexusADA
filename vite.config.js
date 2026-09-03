@@ -15,6 +15,24 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    build: {
+        chunkSizeWarningLimit: 1000,
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('@fullcalendar')) {
+                        return 'vendor-fullcalendar';
+                    }
+                    if (id.includes('chart.js')) {
+                        return 'vendor-chartjs';
+                    }
+                    if (id.includes('frappe-gantt')) {
+                        return 'vendor-gantt';
+                    }
+                },
+            },
+        },
+    },
     server: {
         watch: {
             ignored: ['**/storage/framework/views/**'],
